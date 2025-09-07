@@ -120,7 +120,7 @@ export default function ContactSection({ locale = "en" }: { locale?: LocaleType 
         </p>
 
         {/* Form */}
-        <div className="mx-auto mt-12 max-w-xl p-8 sm:p-12 rounded-2xl shadow-xl bg-white dark:bg-neutral-900">
+        <div className="mx-auto mt-12 w-full p-8 sm:p-12 rounded-2xl shadow-xl bg-white dark:bg-neutral-900">
           <div>
             <h2 className="text-xl font-semibold">{content.subtitle}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
