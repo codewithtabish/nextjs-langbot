@@ -92,13 +92,7 @@ function ElegantShape({
     );
 }
 
-export default function CtaParentSection({
-    title1 = "Elevate Your",
-    title2 = "Digital Vision",
-}: {
-    title1?: string;
-    title2?: string;
-}) {
+export default function CtaParentSection({ locale = "en" }: any)  {
     const fadeUpVariants = {
         hidden: { opacity: 0, y: 30 },
         visible: (i: number) => ({
@@ -215,7 +209,7 @@ export default function CtaParentSection({
                         initial="hidden"
                         animate="visible"
                     >
-                        <CallToActionSection/>
+                        <CallToActionSection locale={locale}/>
                         <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
                             <span className="bg-clip-text text-transparent bg-linear-to-b from-black to-black/80 dark:from-white dark:to-white/80">
                                 {/* {title1} */}

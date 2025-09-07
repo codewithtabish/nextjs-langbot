@@ -9,20 +9,22 @@ type PricingContent = {
   period: string
   cta: string
   note: string
+  teamNote: string   // ✅ Added here
   features: string[]
 }
 
 export const pricingContent: Record<LocaleType, PricingContent> = {
   en: {
     sectionTitle: "Simple, transparent pricing",
-    sectionSubtitle:
-      "Get started with all features for just $13/month.",
+    sectionSubtitle: "Get started with all features for just $13/month.",
     planTitle: "Pro Plan",
     planDescription: "Everything you need to chat with your files.",
     price: "13",
     period: "/month",
     cta: "Get started",
     note: "Cancel anytime. Secure payments. Instant access to the full platform.",
+    teamNote:
+      "Teams of any size can collaborate — share file knowledge, add or switch members whenever you need. Trusted by developers and businesses worldwide.",
     features: [
       "Upload unlimited PDFs, spreadsheets, and documents",
       "AI-powered Q&A and instant summaries",
@@ -41,6 +43,8 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     period: "/月",
     cta: "立即开始",
     note: "随时取消。安全支付。即时访问完整平台。",
+    teamNote:
+      "任何规模的团队都可以协作——共享文件知识，随时添加或更换成员。受到全球开发者和企业的信任。",
     features: [
       "无限上传 PDF、表格和文档",
       "AI 驱动的问答与即时摘要",
@@ -58,7 +62,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/माह",
     cta: "शुरू करें",
-    note: "कभी भी रद्द करें। सुरक्षित भुगतान। तुरंत पूरा प्लेटफ़ॉर्म एक्सेस।",
+    note: "कभी भी रद्द करें। सुरक्षित भुगतान। तुरंत एक्सेस।",
+    teamNote:
+      "किसी भी आकार की टीम सहयोग कर सकती है — फ़ाइल ज्ञान साझा करें और ज़रूरत पड़ने पर सदस्यों को जोड़ें या बदलें। दुनिया भर के डेवलपर्स और कंपनियों द्वारा भरोसेमंद।",
     features: [
       "अनलिमिटेड PDF, स्प्रेडशीट और दस्तावेज़ अपलोड करें",
       "AI-संचालित प्रश्नोत्तर और इंस्टैंट सारांश",
@@ -76,7 +82,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/mes",
     cta: "Comenzar",
-    note: "Cancela en cualquier momento. Pagos seguros. Acceso instantáneo a la plataforma completa.",
+    note: "Cancela en cualquier momento. Pagos seguros. Acceso instantáneo.",
+    teamNote:
+      "Equipos de cualquier tamaño pueden colaborar — compartir conocimiento de archivos y añadir o cambiar miembros cuando lo necesiten. Confiado por empresas y desarrolladores en todo el mundo.",
     features: [
       "Sube PDFs, hojas de cálculo y documentos ilimitados",
       "Preguntas y respuestas con IA y resúmenes instantáneos",
@@ -94,7 +102,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/شهريًا",
     cta: "ابدأ الآن",
-    note: "يمكنك الإلغاء في أي وقت. مدفوعات آمنة. وصول فوري إلى المنصة الكاملة.",
+    note: "يمكنك الإلغاء في أي وقت. مدفوعات آمنة. وصول فوري.",
+    teamNote:
+      "يمكن للفرق من أي حجم التعاون — مشاركة معرفة الملفات وإضافة أو تبديل الأعضاء حسب الحاجة. موثوق من المطورين والشركات حول العالم.",
     features: [
       "تحميل غير محدود لملفات PDF وجداول البيانات والمستندات",
       "إجابات فورية وملخصات مدعومة بالذكاء الاصطناعي",
@@ -112,7 +122,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/mois",
     cta: "Commencer",
-    note: "Annulez à tout moment. Paiements sécurisés. Accès instantané à toute la plateforme.",
+    note: "Annulez à tout moment. Paiements sécurisés. Accès instantané.",
+    teamNote:
+      "Les équipes de toutes tailles peuvent collaborer — partager leur connaissance des fichiers et ajouter ou changer des membres si nécessaire. Approuvé par des développeurs et entreprises du monde entier.",
     features: [
       "Téléversement illimité de PDFs, tableurs et documents",
       "Q&R et résumés instantanés assistés par IA",
@@ -130,7 +142,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/Monat",
     cta: "Loslegen",
-    note: "Jederzeit kündbar. Sichere Zahlungen. Sofortiger Zugriff auf die gesamte Plattform.",
+    note: "Jederzeit kündbar. Sichere Zahlungen. Sofortiger Zugang.",
+    teamNote:
+      "Teams jeder Größe können zusammenarbeiten — Dateiwissen teilen und Mitglieder nach Bedarf hinzufügen oder wechseln. Vertraut von Entwicklern und Firmen weltweit.",
     features: [
       "Unbegrenztes Hochladen von PDFs, Tabellen und Dokumenten",
       "KI-gestützte Fragen & Antworten und sofortige Zusammenfassungen",
@@ -149,6 +163,8 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     period: "/月",
     cta: "始める",
     note: "いつでも解約可能。安全な決済。即時アクセス。",
+    teamNote:
+      "どの規模のチームでも協力可能 — ファイル知識を共有し、必要に応じてメンバーを追加・切替できます。世界中の開発者や企業に信頼されています。",
     features: [
       "PDF、スプレッドシート、ドキュメントを無制限にアップロード",
       "AIによるQ&Aと即時要約",
@@ -166,7 +182,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/ماہ",
     cta: "شروع کریں",
-    note: "کسی بھی وقت منسوخ کریں۔ محفوظ ادائیگیاں۔ مکمل پلیٹ فارم تک فوری رسائی۔",
+    note: "کسی بھی وقت منسوخ کریں۔ محفوظ ادائیگیاں۔ فوری رسائی۔",
+    teamNote:
+      "کسی بھی سائز کی ٹیم تعاون کر سکتی ہے — فائل نالج شیئر کریں، اور جب چاہیں ممبران شامل یا تبدیل کریں۔ دنیا بھر کی کمپنیوں اور ڈویلپرز کا اعتماد۔",
     features: [
       "PDFs، اسپریڈشیٹ اور دستاویزات بغیر حد کے اپ لوڈ کریں",
       "AI پر مبنی سوال و جواب اور فوری خلاصہ",
@@ -184,7 +202,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/mês",
     cta: "Começar",
-    note: "Cancele a qualquer momento. Pagamentos seguros. Acesso imediato à plataforma completa.",
+    note: "Cancele a qualquer momento. Pagamentos seguros. Acesso imediato.",
+    teamNote:
+      "Equipes de qualquer tamanho podem colaborar — compartilhar conhecimento de arquivos e adicionar ou trocar membros conforme necessário. Confiado por empresas e desenvolvedores em todo o mundo.",
     features: [
       "Envie PDFs, planilhas e documentos ilimitados",
       "Perguntas e respostas com IA e resumos instantâneos",
@@ -198,11 +218,13 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     sectionTitle: "Простая и прозрачная цена",
     sectionSubtitle: "Все функции всего за $13 в месяц.",
     planTitle: "План Pro",
-    planDescription: "Все, что нужно для общения с вашими файлами.",
+    planDescription: "Все, что нужно для общения с файлами.",
     price: "13",
     period: "/месяц",
     cta: "Начать",
-    note: "Можно отменить в любое время. Безопасные платежи. Мгновенный доступ ко всей платформе.",
+    note: "Можно отменить в любое время. Безопасные платежи. Мгновенный доступ.",
+    teamNote:
+      "Команды любого размера могут сотрудничать — делиться знаниями из файлов, добавлять или менять участников при необходимости. Доверено компаниями и разработчиками по всему миру.",
     features: [
       "Неограниченная загрузка PDF, таблиц и документов",
       "Вопросы и ответы на базе ИИ и мгновенные резюме",
@@ -220,7 +242,9 @@ export const pricingContent: Record<LocaleType, PricingContent> = {
     price: "13",
     period: "/월",
     cta: "시작하기",
-    note: "언제든지 취소 가능. 안전한 결제. 전체 플랫폼에 즉시 액세스.",
+    note: "언제든지 취소 가능. 안전한 결제. 즉시 전체 플랫폼 액세스.",
+    teamNote:
+      "어떤 규모의 팀도 협업할 수 있습니다 — 파일 지식을 공유하고 필요할 때 구성원을 추가하거나 교체하세요. 전 세계의 기업과 개발자가 신뢰합니다.",
     features: [
       "무제한 PDF, 스프레드시트 및 문서 업로드",
       "AI 기반 Q&A 및 즉시 요약",

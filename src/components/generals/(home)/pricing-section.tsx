@@ -68,8 +68,7 @@ export default function Pricing({ locale = "en" }: HomeLogoCloudProps) {
                 ))}
               </ul>
               <p className="text-muted-foreground mt-6 text-sm">
-                Teams of any size can collaborate — add or switch members as you
-                need. Trusted by developers and businesses worldwide.
+                {content.teamNote}
               </p>
 
               {/* Logos */}

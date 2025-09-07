@@ -5,6 +5,8 @@ import StatsSection from "@/components/generals/(home)/home-status"
 import HomeLogoCloud from "@/components/generals/(home)/logo-cloud"
 import Pricing from "@/components/generals/(home)/pricing-section"
 import WorkingStepsWrapper from "@/components/generals/(home)/working-steps-wrapper"
+import { HeroHeader } from "@/components/generals/header"
+import { HoverBackground } from "@/components/ui/hover-background"
 
 export default async function LocalePage({
   params,
@@ -14,7 +16,36 @@ export default async function LocalePage({
   const { locale } = await params
 
   return (
-    <div>
+    <div className="w-screen ">
+              <HeroHeader locale={locale}/>
+
+      
+              <HoverBackground
+        colors={{
+          
+          
+          // background: 'bg-',
+          objects: [
+            'bg-emerald-500/30',
+            'bg-emerald-500/30',
+            'bg-emerald-500/30',
+            'bg-emerald-500/30',
+            'bg-emerald-500/30',
+            'bg-teal-500/30',
+            'bg-green-500/30',
+            'bg-lime-500/30',
+            'bg-cyan-500/30',
+            'bg-blue-500/30',
+            'bg-blue-500/30',
+            'bg-blue-500/30',
+            'bg-blue-500/30',
+            'bg-blue-500/30',
+          ],
+          glow: 'shadow-emerald-400/70',
+        }}
+        objectCount={12}
+      >
+
       <HeroSection locale={locale} />
       <Features locale={locale} />
       <HomeLogoCloud locale={locale} />
@@ -22,8 +53,11 @@ export default async function LocalePage({
       <WorkingStepsWrapper locale={locale} /> {/* ✅ lazy-loaded */}
       <Pricing locale={locale} />
       <div className="min-w-screen">
-        <CtaParentSection />
+        <CtaParentSection locale={locale}  />
       </div>
+            </HoverBackground>
+
     </div>
+
   )
 }

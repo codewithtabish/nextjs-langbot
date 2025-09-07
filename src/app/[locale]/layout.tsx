@@ -8,6 +8,7 @@ import { getDirection } from "@/lib/localDirection";
 import { allowedLocales } from "@/constants/languages";
 import { HeroHeader } from "@/components/generals/header";
 import FooterSection from "@/components/generals/footer";
+import { HoverBackground } from "@/components/ui/hover-background";
 
 
 type LocaleType = typeof allowedLocales[number];
@@ -22,7 +23,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       
        <body className="antialiased  min-h-screen overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider delayDuration={0}>
+
             
             
             {/* <SocialBar /> */}
@@ -30,7 +31,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
               className="
                 flex flex-col
                 min-h-screen
-                w-full
+                w-screen
                 container
                 mx-auto
                 px-2
@@ -45,15 +46,15 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                 transition-all
               "
             >
-            {/* <Header locale={locale} /> */}
-            <HeroHeader/>
+                        <TooltipProvider delayDuration={0}>
+
+                                      {/* <HeroHeader locale={locale} /> */}
+
+             
               {children}
-              {/* <Footer locale={locale} /> */}
-              {/* <FooterBG/> */}
-            </main>
-            <FooterSection/>
-            {/* <Footer locale={safeLocale} /> */}
+            <FooterSection locale={locale}/>
           </TooltipProvider>
+            </main>
         </ThemeProvider>
       </body>
     </html>
