@@ -20,7 +20,7 @@ export default async function LocalePage({
       <HomeLogoCloud locale={locale} />
       <StatsSection locale={locale} />
       <WorkingStepsWrapper locale={locale} /> {/* ✅ lazy-loaded */}
-      <Pricing />
+      <Pricing locale={locale} />
       <div className="min-w-screen">
         <CtaParentSection />
       </div>
