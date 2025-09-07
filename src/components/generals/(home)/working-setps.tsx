@@ -1,81 +1,99 @@
 "use client"
 
 import { HomeLogoCloudProps, isUrduTypedLanguage } from "@/constants/languages"
-import { Player } from "@lottiefiles/react-lottie-player"
+import dynamic from "next/dynamic"
+import uploadAnim from "@/anim/upload.json"
+import aiprocess from "@/anim/process-ai.json"
+import summary from "@/anim/summary.json"
 import { motion } from "framer-motion"
 
-// Example steps data – you can add more steps and just swap JSON file paths later
+// ✅ Dynamically import Lottie for lazy loading (client-side only)
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
+
 const steps = [
   {
-    anim: "/anim/upload.json",
+    anim: uploadAnim,
     title: "Upload Your File",
     subtitle:
       "Drag and drop PDFs, spreadsheets, or documents into the platform and prepare them for AI-powered chat.",
   },
   {
-    anim: "/anim/upload.json",
+    anim: aiprocess,
     title: "AI Processes Instantly",
     subtitle:
       "Our pipeline indexes and understands your file instantly, ready to answer your questions with accuracy.",
   },
   {
-    anim: "/anim/upload.json",
+    anim: summary,
     title: "Chat & Summarize",
     subtitle:
       "Ask questions in any of the supported languages, get precise answers, and generate clear summaries.",
   },
 ]
 
-export default function WorkingSteps({ locale = "en" }: HomeLogoCloudProps) {
+export default function HowItWorks({ locale = "en" }: HomeLogoCloudProps) {
   const isRtl = isUrduTypedLanguage(locale)
 
   return (
     <section
-      className="py-16 md:py-32"
+      className="py-12 md:py-16"
       style={{
         direction: isRtl ? "rtl" : "ltr",
         textAlign: isRtl ? "right" : "left",
       }}
     >
-      <div className="mx-auto max-w-6xl px-6 space-y-16">
+      <div className="mx-auto max-w-5xl px-4 space-y-14">
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl font-semibold lg:text-5xl">
-            How It Works
-          </h2>
-          <p className="mt-4 text-muted-foreground">
+        <div className="text-center max-w-xl mx-auto mb-10">
+          <h2 className="text-3xl font-semibold lg:text-4xl">How It Works</h2>
+          <p className="mt-3 text-muted-foreground">
             A simple three-step process to transform any file into instant
             knowledge with AI.
           </p>
         </div>
 
         {/* Steps */}
-        {steps.map((step, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.2 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-12 items-center"
-          >
-            {/* Left: Animation */}
-            <div className="flex justify-center">
-              <Player
-                autoplay
-                loop
-                src={step.anim}
-                className="w-full max-w-md h-auto"
-              />
-            </div>
+        {steps.map((step, i) => {
+          const isEven = i % 2 !== 0
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              viewport={{ once: true, amount: 0.4 }} // ✅ Only animate when ~40% visible
+              className={`grid md:grid-cols-2 gap-8 items-center ${
+                isEven && "md:flex-row-reverse"
+              }`}
+            >
+              {/* Animation */}
+              <div
+                className={`flex justify-center ${
+                  isEven ? "md:order-2" : "md:order-1"
+                }`}
+              >
+                <Lottie
+                  animationData={step.anim}
+                  loop
+                  autoplay
+                  className="w-52 h-52 sm:w-60 sm:h-60"
+                />
+              </div>
 
-            {/* Right: Text */}
-            <div className="space-y-4">
-              <h3 className="text-2xl font-medium">{step.title}</h3>
-              <p className="text-muted-foreground">{step.subtitle}</p>
-            </div>
-          </motion.div>
-        ))}
+              {/* Text */}
+              <div
+                className={`space-y-2 ${
+                  isEven ? "md:order-1" : "md:order-2"
+                }`}
+              >
+                <h3 className="text-xl font-medium">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed opacity-[.6] italic">
+                  {step.subtitle}
+                </p>
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
     </section>
   )
