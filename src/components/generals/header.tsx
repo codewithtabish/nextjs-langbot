@@ -73,13 +73,11 @@ export const HeroHeader = () => {
 
           <div className='flex gap-3 items-center'>
             <ModeToggle/>
-
             <LanguageSwitcher/>
             <Button>
                 GET STARTED
             </Button>
           </div>
-
 
           {/* Mobile Menu */}
           {menuState && (
