@@ -171,7 +171,7 @@ export default function ContactSection({ locale = "en" }: { locale?: LocaleType 
             />
 
             {/* Submit */}
-            <Button type="submit" className="w-full rounded-xl shadow-md">
+            <Button type="submit" className="w-full rounded-xl shadow-md py-3">
               {content.button}
             </Button>
           </form>
