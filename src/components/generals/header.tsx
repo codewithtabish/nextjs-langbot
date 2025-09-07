@@ -103,7 +103,7 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
               {menuItems.map((item, index) => (
                 <li key={index}>
                   <Link
-                    href={item.href}
+                    href={`/${locale}/${item.href}`}
                     className="text-muted-foreground hover:text-accent-foreground block duration-150"
                   >
                     {item.name}
