@@ -2,36 +2,26 @@
 
 import { HomeLogoCloudProps, isUrduTypedLanguage } from "@/constants/languages"
 import dynamic from "next/dynamic"
+import { motion } from "framer-motion"
+
+// ✅ Dynamically import Lottie
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
+
+// Import animations (replace with your real files)
 import uploadAnim from "@/anim/upload.json"
 import aiprocess from "@/anim/process-ai.json"
 import summary from "@/anim/summary.json"
-import { motion } from "framer-motion"
+import { howItWorksContent } from "@/constants/translations/working-steps-content"
 
-// ✅ Dynamically import Lottie for lazy loading (client-side only)
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
-
-const steps = [
-  {
-    anim: uploadAnim,
-    title: "Upload Your File",
-    subtitle:
-      "Drag and drop PDFs, spreadsheets, or documents into the platform and prepare them for AI-powered chat.",
-  },
-  {
-    anim: aiprocess,
-    title: "AI Processes Instantly",
-    subtitle:
-      "Our pipeline indexes and understands your file instantly, ready to answer your questions with accuracy.",
-  },
-  {
-    anim: summary,
-    title: "Chat & Summarize",
-    subtitle:
-      "Ask questions in any of the supported languages, get precise answers, and generate clear summaries.",
-  },
-]
+const animFiles = [uploadAnim, aiprocess, summary]
 
 export default function HowItWorks({ locale = "en" }: HomeLogoCloudProps) {
+  // ✅ Pick content by locale, fallback to English
+  const content =
+    howItWorksContent[locale as keyof typeof howItWorksContent] ||
+    howItWorksContent["en"]
+
+  // ✅ RTL handling
   const isRtl = isUrduTypedLanguage(locale)
 
   return (
@@ -45,15 +35,16 @@ export default function HowItWorks({ locale = "en" }: HomeLogoCloudProps) {
       <div className="mx-auto max-w-5xl px-4 space-y-14">
         {/* Section Heading */}
         <div className="text-center max-w-xl mx-auto mb-10">
-          <h2 className="text-3xl font-semibold lg:text-4xl">How It Works</h2>
+          <h2 className="text-3xl font-semibold lg:text-4xl">
+            {content.sectionTitle}
+          </h2>
           <p className="mt-3 text-muted-foreground">
-            A simple three-step process to transform any file into instant
-            knowledge with AI.
+            {content.sectionSubtitle}
           </p>
         </div>
 
         {/* Steps */}
-        {steps.map((step, i) => {
+        {content.steps.map((step, i) => {
           const isEven = i % 2 !== 0
           return (
             <motion.div
@@ -61,7 +52,7 @@ export default function HowItWorks({ locale = "en" }: HomeLogoCloudProps) {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              viewport={{ once: true, amount: 0.4 }} // ✅ Only animate when ~40% visible
+              viewport={{ once: true, amount: 0.4 }}
               className={`grid md:grid-cols-2 gap-8 items-center ${
                 isEven && "md:flex-row-reverse"
               }`}
@@ -73,7 +64,7 @@ export default function HowItWorks({ locale = "en" }: HomeLogoCloudProps) {
                 }`}
               >
                 <Lottie
-                  animationData={step.anim}
+                  animationData={animFiles[i]}
                   loop
                   autoplay
                   className="w-52 h-52 sm:w-60 sm:h-60"
@@ -87,7 +78,7 @@ export default function HowItWorks({ locale = "en" }: HomeLogoCloudProps) {
                 }`}
               >
                 <h3 className="text-xl font-medium">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed opacity-[.6] italic">
+                <p className="text-muted-foreground leading-relaxed opacity-70 italic">
                   {step.subtitle}
                 </p>
               </div>
