@@ -1,4 +1,14 @@
 import "../globals.css";
+import "@/styles/themes/twitter.css";
+import "@/styles/themes/midnight-bloom.css";
+import "@/styles/themes/nature.css";
+import "@/styles/themes/cosmic-night.css";
+import "@/styles/themes/caffeine.css";
+import "@/styles/themes/pastel.css";
+import "@/styles/themes/violet.css";
+
+/* Your other global styles below */
+
 // import Header from "@/components/generals/header";
 // import Footer from "@/components/generals/footer";
 // import FooterBG from "@/components/generals/footer-bg";
@@ -22,7 +32,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     <html lang={safeLocale} dir={dir} suppressHydrationWarning>
       
        <body className="antialiased  min-h-screen overflow-x-hidden">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem
+        
+        >
 
             
             

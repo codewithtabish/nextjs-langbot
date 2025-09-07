@@ -1,0 +1,43 @@
+.theme-cosmic {
+  --background: rgb(240, 240, 255);
+  --foreground: rgb(30, 30, 50);
+  --primary: rgb(75, 0, 130);
+  --primary-foreground: rgb(255, 255, 255);
+  --secondary: rgb(138, 43, 226);
+  --secondary-foreground: rgb(255, 255, 255);
+  --accent: rgb(255, 105, 180);
+  --accent-foreground: rgb(0, 0, 0);
+  --muted: rgb(230, 230, 245);
+  --muted-foreground: rgb(100, 100, 120);
+  --destructive: rgb(178, 34, 34);
+  --destructive-foreground: rgb(255, 255, 255);
+  --card: rgb(250, 250, 255);
+  --card-foreground: rgb(0, 0, 0);
+  --popover: rgb(250, 250, 255);
+  --popover-foreground: rgb(0, 0, 0);
+  --border: rgb(200, 200, 220);
+  --input: rgb(200, 200, 220);
+  --ring: rgb(75, 0, 130);
+}
+
+.theme-cosmic.dark {
+  --background: rgb(15, 15, 30);
+  --foreground: rgb(220, 220, 240);
+  --primary: rgb(106, 90, 205);
+  --primary-foreground: rgb(255, 255, 255);
+  --secondary: rgb(123, 104, 238);
+  --secondary-foreground: rgb(255, 255, 255);
+  --accent: rgb(199, 21, 133);
+  --accent-foreground: rgb(255, 255, 255);
+  --muted: rgb(25, 25, 40);
+  --muted-foreground: rgb(150, 150, 170);
+  --destructive: rgb(139, 0, 0);
+  --destructive-foreground: rgb(255, 255, 255);
+  --card: rgb(20, 20, 35);
+  --card-foreground: rgb(255, 255, 255);
+  --popover: rgb(20, 20, 35);
+  --popover-foreground: rgb(255, 255, 255);
+  --border: rgb(60, 60, 80);
+  --input: rgb(60, 60, 80);
+  --ring: rgb(106, 90, 205);
+}
