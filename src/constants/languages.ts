@@ -28,3 +28,23 @@ export const isUrduTypedLanguage = (code: LocaleType): boolean => {
 export interface HomeLogoCloudProps {
   locale?: LocaleType
 }
+
+
+export const clerkLanguages = [
+  "en-US", // English (US)
+  "en-GB", // English (UK)
+  "da-DK", // Danish
+  "de-DE", // German
+  "es-ES", // Spanish
+  "fi-FI", // Finnish
+  "fr-FR", // French
+  "it-IT", // Italian
+  "nl-NL", // Dutch
+  "no-NO", // Norwegian
+  "pl-PL", // Polish
+  "pt-PT", // Portuguese
+  "sv-SE", // Swedish
+  "tr-TR", // Turkish
+  "zh-CN", // Simplified Chinese
+  "ja-JP"  // Japanese
+];
