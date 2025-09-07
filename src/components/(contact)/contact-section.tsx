@@ -128,14 +128,14 @@ export default function ContactSection({ locale = "en" }: { locale?: LocaleType 
             </p>
           </div>
 
-          <form action="" className="mt-8 space-y-6">
+          <form action="" className="mt-8 space-y-6 w-full">
             {/* Name */}
             <Input
               type="text"
               id="name"
               placeholder={content.placeholders.name}
               required
-              className="rounded-xl shadow-md py-6"
+              className="rounded-xl w-full shadow-md py-6"
             />
 
             {/* Email */}
@@ -144,12 +144,12 @@ export default function ContactSection({ locale = "en" }: { locale?: LocaleType 
               id="email"
               placeholder={content.placeholders.email}
               required
-              className="rounded-xl shadow-md py-6"
+              className="rounded-xl shadow-md py-6 w-full"
             />
 
             {/* Country */}
-            <Select>
-              <SelectTrigger className="rounded-xl shadow-md w-full py-6">
+            <Select >
+              <SelectTrigger className="rounded-xl shadow-md  py-6 w-full">
                 <SelectValue placeholder={content.placeholders.country} />
               </SelectTrigger>
               <SelectContent className="max-h-64">
@@ -167,11 +167,11 @@ export default function ContactSection({ locale = "en" }: { locale?: LocaleType 
               placeholder={content.placeholders.message}
               rows={6}
               required
-              className="rounded-xl shadow-md min-h-[120px] py-6"
+              className="rounded-xl shadow-md min-h-[120px] py-6 w-full"
             />
 
             {/* Submit */}
-            <Button type="submit" className="w-full rounded-xl shadow-md py-4">
+            <Button type="submit" className="w-full rounded-xl  shadow-md py-4">
               {content.button}
             </Button>
           </form>
