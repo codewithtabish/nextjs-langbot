@@ -12,10 +12,24 @@ import ThemeChanger from "./theme-changer"
 
 import { headerContent } from "@/constants/translations/header-content"
 import { HomeLogoCloudProps, isUrduTypedLanguage } from "@/constants/languages"
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  ClerkLoading,
+  ClerkLoaded,
+} from "@clerk/nextjs"
+
+import { dark } from "@clerk/themes"
+import { useTheme } from "next-themes"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Badge } from "../ui/badge"
 
 export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
+  const { theme } = useTheme()
 
   React.useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -81,20 +95,68 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
             ))}
           </ul>
 
-          {/* Right: Controls + CTA */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* CTA only on desktop */}
-            <div className="hidden lg:flex">
-              <Button>
-                {locale === "ur" || locale === "ar"
-                  ? "شروع کریں"
-                  : "Get Started"}
-              </Button>
-            </div>
+          {/* Right side */}
+          <div>
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* CTA only on desktop */}
+              <div className="hidden lg:flex items-center gap-2">
+                {/* <LanguageSwitcher/> */}
+                {/* Loader while Clerk checks auth state */}
+                <ClerkLoading>
+                  <Skeleton className="h-10 w-24 rounded-lg" />
+                </ClerkLoading>
 
-            {/* Mode & Language toggles (always visible) */}
-            <ModeToggle />
-            {/* <LanguageSwitcher /> */}
+                <ClerkLoaded>
+                  {/* When NOT logged in */}
+                  <SignedOut>
+                    <SignInButton
+                      mode="modal"
+                      appearance={{
+                        baseTheme: theme === "dark" ? dark : undefined,
+                        variables: {
+                          borderRadius: "0.75rem",
+                          colorPrimary:
+                            theme === "dark" ? "#22d3ee" : "#6366f1",
+                        },
+                      }}
+                    >
+                      <Button>
+                        {locale === "ur" || locale === "ar"
+                          ? "شروع کریں"
+                          : "Get Started"}
+                      </Button>
+                    </SignInButton>
+                  </SignedOut>
+                    <SignInButton>
+                    <Link href={'/dashboard'} className="py-3 mr-3">
+                    <Badge variant={'outline'}>
+                    Uplod File
+
+                    </Badge>
+                    </Link>
+                  </SignInButton>
+
+                  {/* When logged in */}
+                  <SignedIn>
+                    <UserButton
+                      afterSignOutUrl={process.env.NEXT_PUBLIC_BASE_URL}
+                      appearance={{
+                        baseTheme: theme === "dark" ? dark : undefined,
+                        variables: {
+                          borderRadius: "0.75rem",
+                          colorPrimary:
+                            theme === "dark" ? "#22d3ee" : "#6366f1",
+                        },
+                      }}
+                    />
+                  </SignedIn>
+                
+                </ClerkLoaded>
+              </div>
+
+              {/* Mode & Language toggles (always visible) */}
+              <ModeToggle />
+            </div>
 
             {/* Hamburger (mobile only) */}
             <button

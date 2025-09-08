@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,170 +11,108 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs"
+import { useTheme } from "next-themes"
+import { dark } from "@clerk/themes"
 import { contactContent } from "@/constants/translations/contact-content"
 import { LocaleType, isUrduTypedLanguage } from "@/constants/languages"
-
-const countries = [
-  "Afghanistan",
-  "Albania",
-  "Algeria",
-  "Andorra",
-  "Angola",
-  "Argentina",
-  "Australia",
-  "Austria",
-  "Bangladesh",
-  "Belgium",
-  "Brazil",
-  "Bulgaria",
-  "Canada",
-  "Chile",
-  "China",
-  "Colombia",
-  "Czech Republic",
-  "Denmark",
-  "Egypt",
-  "Estonia",
-  "Finland",
-  "France",
-  "Germany",
-  "Greece",
-  "Hong Kong",
-  "Hungary",
-  "Iceland",
-  "India",
-  "Indonesia",
-  "Iran",
-  "Iraq",
-  "Ireland",
-  "Israel",
-  "Italy",
-  "Japan",
-  "Jordan",
-  "Kenya",
-  "Kuwait",
-  "Latvia",
-  "Lebanon",
-  "Lithuania",
-  "Luxembourg",
-  "Malaysia",
-  "Mexico",
-  "Monaco",
-  "Morocco",
-  "Nepal",
-  "Netherlands",
-  "New Zealand",
-  "Nigeria",
-  "Norway",
-  "Oman",
-  "Pakistan",
-  "Palestine",
-  "Peru",
-  "Philippines",
-  "Poland",
-  "Portugal",
-  "Qatar",
-  "Romania",
-  "Russia",
-  "Saudi Arabia",
-  "Serbia",
-  "Singapore",
-  "Slovakia",
-  "Slovenia",
-  "South Africa",
-  "South Korea",
-  "Spain",
-  "Sri Lanka",
-  "Sweden",
-  "Switzerland",
-  "Syria",
-  "Taiwan",
-  "Thailand",
-  "Tunisia",
-  "Turkey",
-  "Ukraine",
-  "United Arab Emirates",
-  "United Kingdom",
-  "United States",
-  "Vietnam",
-  "Yemen",
-]
+import { sendEmail } from "@/actions/send-email"
+import { countries } from "@/utils/countries"
 
 export default function ContactSection({ locale = "en" }: { locale?: LocaleType }) {
   const content = contactContent[locale] || contactContent["en"]
   const isRTL = isUrduTypedLanguage(locale || "en")
+  const { theme } = useTheme()
+  const redirectUrl = process.env.NEXT_PUBLIC_CONTACT_REDIRECT_URL || "/"
+
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setSuccess(null)
+    setError(null)
+
+    const formData = new FormData(e.currentTarget)
+    const payload = {
+      fullName: formData.get("name") as string,
+      email: formData.get("email") as string,
+      country: formData.get("country") as string,
+      message: formData.get("msg") as string,
+    }
+
+    try {
+      const res = await sendEmail(payload)
+      if (res.success) {
+        setSuccess(locale === "ur" || locale === "ar" ? "پیغام بھیج دیا گیا!" : "Message sent successfully!")
+        e.currentTarget.reset()
+      } else {
+        setError(locale === "ur" || locale === "ar" ? "پیغام بھیجنے میں ناکامی" : "Failed to send message. Try again later.")
+      }
+    } catch (err) {
+      setError(locale === "ur" || locale === "ar" ? "پیغام بھیجنے میں ناکامی" : "Failed to send message. Try again later.")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <section
-      className="py-32"
-      dir={isRTL ? "rtl" : "ltr"}
-      style={{ textAlign: isRTL ? "right" : "left" }}
-    >
+    <section className="py-32" dir={isRTL ? "rtl" : "ltr"} style={{ textAlign: isRTL ? "right" : "left" }}>
       <div className="mx-auto max-w-6xl px-8 lg:px-0">
         {/* Header */}
-        <h1 className="text-center text-4xl font-semibold lg:text-5xl">
-          {content.title}
-        </h1>
-        <p className="mt-4 text-center text-muted-foreground md:max-w-[70%] mx-auto">
-          {content.intro}
-        </p>
+        <h1 className="text-center text-4xl font-semibold lg:text-5xl">{content.title}</h1>
+        <p className="mt-4 text-center text-muted-foreground md:max-w-[70%] mx-auto">{content.intro}</p>
 
-        {/* Form */}
+        {/* Form Container */}
         <div className="mx-auto mt-12 w-full p-8 sm:p-12 rounded-2xl shadow-sm bg-background/5">
           <div>
             <h2 className="text-xl font-semibold">{content.subtitle}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {content.description}
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">{content.description}</p>
           </div>
 
-          <form action="" className="mt-8 space-y-6 w-full">
-            {/* Name */}
-            <Input
-              type="text"
-              id="name"
-              placeholder={content.placeholders.name}
-              required
-              className="rounded-xl w-full shadow-md py-6"
-            />
-
-            {/* Email */}
-            <Input
-              type="email"
-              id="email"
-              placeholder={content.placeholders.email}
-              required
-              className="rounded-xl shadow-md py-6 w-full"
-            />
-
-            {/* Country */}
-            <Select >
-              <SelectTrigger className="rounded-xl shadow-md  py-6 w-full">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6 w-full">
+            <Input type="text" name="name" placeholder={content.placeholders.name} required className="rounded-xl w-full shadow-md py-6" />
+            <Input type="email" name="email" placeholder={content.placeholders.email} required className="rounded-xl shadow-md py-6 w-full" />
+            
+            <Select name="country">
+              <SelectTrigger className="rounded-xl shadow-md py-6 w-full">
                 <SelectValue placeholder={content.placeholders.country} />
               </SelectTrigger>
               <SelectContent className="max-h-64">
                 {countries.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
-                  </SelectItem>
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
 
-            {/* Message */}
-            <Textarea
-              id="msg"
-              placeholder={content.placeholders.message}
-              rows={6}
-              required
-              className="rounded-xl shadow-md min-h-[120px] py-6 w-full"
-            />
+            <Textarea name="msg" placeholder={content.placeholders.message} rows={6} required className="rounded-xl shadow-md min-h-[120px] py-6 w-full" />
 
-            {/* Submit */}
-            <Button type="submit" className="w-full rounded-xl  shadow-md py-6">
-              {content.button}
-            </Button>
+            {/* Clerk login check */}
+            <SignedOut>
+              <SignInButton
+                mode="modal"
+                fallbackRedirectUrl={redirectUrl}
+                appearance={{
+                  baseTheme: theme === "dark" ? dark : undefined,
+                  variables: { borderRadius: "0.75rem", colorPrimary: theme === "dark" ? "#22d3ee" : "#6366f1" },
+                }}
+              >
+                <Button className="w-full rounded-xl shadow-md py-6">
+                  {locale === "ur" || locale === "ar" ? "لاگ ان کریں" : "Login to Continue"}
+                </Button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <Button type="submit" disabled={loading} className="w-full rounded-xl shadow-md py-6">
+                {loading ? (locale === "ur" || locale === "ar" ? "بھیج رہے ہیں..." : "Sending...") : content.button}
+              </Button>
+            </SignedIn>
+
+            {success && <p className="text-green-600 mt-2">{success}</p>}
+            {error && <p className="text-red-600 mt-2">{error}</p>}
           </form>
         </div>
       </div>
