@@ -83,7 +83,7 @@ export default function FooterSection({ locale = "en" }: HomeLogoCloudProps) {
           </Link>
         </div>
         <div className="flex flex-2 gap-2 items-center-center">
-        <LanguageSwitcher/>
+        {/* <LanguageSwitcher/> */}
         <ModeToggle/>
 
         </div>

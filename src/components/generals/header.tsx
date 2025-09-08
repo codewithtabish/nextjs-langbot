@@ -94,7 +94,7 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
 
             {/* Mode & Language toggles (always visible) */}
             <ModeToggle />
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher /> */}
 
             {/* Hamburger (mobile only) */}
             <button
