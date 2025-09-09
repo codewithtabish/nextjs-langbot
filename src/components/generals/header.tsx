@@ -19,6 +19,7 @@ import {
   UserButton,
   ClerkLoading,
   ClerkLoaded,
+  SignIn,
 } from "@clerk/nextjs"
 
 import { dark } from "@clerk/themes"
@@ -127,14 +128,14 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
                       </Button>
                     </SignInButton>
                   </SignedOut>
-                    <SignInButton>
-                    <Link href={'/dashboard'} className="py-3 mr-3">
+                    {/* <SignIn> */}
+                    <Link href={`/${locale}/dashboard`} className="py-3 mr-3">
                     <Badge variant={'outline'}>
                     Uplod File
 
                     </Badge>
                     </Link>
-                  </SignInButton>
+                  {/* </SignIn> */}
 
                   {/* When logged in */}
                   <SignedIn>

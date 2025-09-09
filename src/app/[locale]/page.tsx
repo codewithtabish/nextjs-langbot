@@ -16,7 +16,7 @@ export default async function LocalePage({
   const { locale } = await params
 
   return (
-    <div className="w-screen ">
+    <div className="w-screen  ">
               <HeroHeader locale={locale}/>
 
       
@@ -49,6 +49,7 @@ export default async function LocalePage({
       <HeroSection locale={locale} />
       <Features locale={locale} />
       <HomeLogoCloud locale={locale} />
+      {/* <HomeVideoPlayer/> */}
       <StatsSection locale={locale} />
       <WorkingStepsWrapper locale={locale} /> {/* ✅ lazy-loaded */}
       <Pricing locale={locale} />

@@ -7,6 +7,7 @@ import "@/styles/themes/caffeine.css";
 import "@/styles/themes/pastel.css";
 import "@/styles/themes/violet.css";
 
+
 /* Your other global styles below */
 
 // import Header from "@/components/generals/header";
@@ -19,6 +20,8 @@ import { allowedLocales } from "@/constants/languages";
 import { HeroHeader } from "@/components/generals/header";
 import FooterSection from "@/components/generals/footer";
 import { HoverBackground } from "@/components/ui/hover-background";
+import { Toaster } from "@/components/ui/sonner";
+
 
 
 type LocaleType = typeof allowedLocales[number];
@@ -32,7 +35,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     <html lang={safeLocale} dir={dir} suppressHydrationWarning>
       
        <body className="antialiased  min-h-screen overflow-x-hidden">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem
+        <ThemeProvider attribute="class" defaultTheme="dark" 
         
         >
 
@@ -44,20 +47,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                 flex flex-col
                 min-h-screen
                 w-screen
-                container
-                mx-auto
-                px-2
-                sm:px-4
-                md:px-6
-                lg:px-8
-                xl:px-10
-                2xl:px-12
-                py-4
-                items-center
-                justify-start
-                transition-all
+                
               "
+
             >
+              <Toaster/>
                         <TooltipProvider delayDuration={0}>
 
                                       {/* <HeroHeader locale={locale} /> */}

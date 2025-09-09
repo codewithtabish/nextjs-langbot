@@ -145,9 +145,44 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+        /* padding: 0%; */
+    /* margin: 0%; */
   }
   body {
     @apply bg-background text-foreground;
     overflow-x: hidden;
+    /* padding: 0%; */
+    /* margin: 0%; */
   }
 }
+
+
+
+
+/* globals.css */
+
+/* Remove default margin/padding and set height to full */
+html, body, #__next {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Make background cover full page */
+body {
+  /* background-color:green;  */
+  padding: 0%;
+  margin: 0%;
+  height: 100%;
+  /* your red color */
+}
+
+
+
+  /* const menuItems = [
+    { name: "Dashboard", icon: <DashboardIcon className="w-5 h-5" />, href: "#" },
+    { name: "Files", icon: <FilesIcon className="w-5 h-5" />, href: "/en/dashboard/files" },
+    { name: "Chat Files", icon: <ChatIcon className="w-5 h-5" />, href: "/en/dashboard/chat" },
+    { name: "Pricing", icon: <PricingIcon className="w-5 h-5" />, href: "/en/dashboard/pricing" },
+    { name: "Trigger", icon: <TriggerIcon className="w-5 h-5" />, href: "/en/dashboard/trigger" },
+  ]; */
