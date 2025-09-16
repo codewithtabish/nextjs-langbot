@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id             String   @id
+  title          String
+  shortDesc      String
+  content        Json?
+  category       String
+  bannerImageUrl String
+  ogImageUrl     String
+  sidebarLinks   String[]
+  seoId          String   @unique
+  slug           String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  Seo            Seo      @relation(fields: [seoId], references: [id])
+}
+
+model Seo {
+  id              String   @id
+  metaTitle       String
+  metaDescription String
+  ogTitle         String
+  ogDescription   String
+  tags            String[]
+  keywords        String[]
+  canonicalUrl    String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime
+  Blog            Blog?
+}

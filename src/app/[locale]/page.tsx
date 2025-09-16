@@ -1,3 +1,4 @@
+import DashboardBentoGrid from "@/components/dashboard/(main)/dashboard-bento-grid"
 import HeroSection from "@/components/generals/(hero)/hero-section"
 import CtaParentSection from "@/components/generals/(home)/home-cta-section"
 import Features from "@/components/generals/(home)/home-features"
@@ -47,10 +48,15 @@ export default async function LocalePage({
       >
 
       <HeroSection locale={locale} />
+         <div className="md:max-w-6xl mx-auto py-10">
+      <DashboardBentoGrid/>
+
+      </div>
       <Features locale={locale} />
       <HomeLogoCloud locale={locale} />
       {/* <HomeVideoPlayer/> */}
       <StatsSection locale={locale} />
+   
       <WorkingStepsWrapper locale={locale} /> {/* ✅ lazy-loaded */}
       <Pricing locale={locale} />
       <div className="min-w-screen">

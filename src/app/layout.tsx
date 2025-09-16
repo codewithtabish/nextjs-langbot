@@ -25,16 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <head /> {/* ✅ let Next.js manage head + scripts */}
-        <body
-          className={`${geistSans.variable} ${geistMono.variable}`}
-        >
-          {/* ✅ ThemeProvider must be INSIDE body */}
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ClerkProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
-        </body>
-      </html>
-    </ClerkProvider>
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
