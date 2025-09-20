@@ -2,14 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma-client";
 import { revalidateTag } from "next/cache";
 
-// ✅ Update blog *content only*
 export async function PUT(
   req: NextRequest,
-    params: Promise<{ slug: string }>
-
-  // { params }: { params: { slug: string } }
+  { params }: { params: { slug: string } }  // ✅ Correct type
 ) {
-  const { slug } = await params;
+  const { slug } = params;                  // ✅ No await
 
   try {
     const body = await req.json();
@@ -29,8 +26,6 @@ export async function PUT(
 
     revalidateTag("all:blogs");
     revalidateTag(`single:blog:${slug}`);
-    // tags: [`single:blog:${slug}`],   // ✅ tag includes the slug
-    // For all blogs list page
 
     return NextResponse.json({ success: true, updatedBlog }, { status: 200 });
   } catch (error) {
