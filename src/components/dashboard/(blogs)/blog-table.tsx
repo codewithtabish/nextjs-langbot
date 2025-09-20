@@ -28,6 +28,7 @@ import {
   useReactTable,
   Row,
 } from "@tanstack/react-table"
+import { useRouter } from "next/navigation"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -85,7 +86,7 @@ function DragHandle({ id }: { id: number }) {
 }
 
 /* ---------- Columns ---------- */
-export function getColumns(onDelete: (slug: string) => Promise<void>): ColumnDef<BlogRow>[] {
+export function getColumns(onDelete: (slug: string) => Promise<void>, handleEdit: (slug: string) => void): ColumnDef<BlogRow>[] {
   return [
     {
       id: "drag",
@@ -127,6 +128,7 @@ export function getColumns(onDelete: (slug: string) => Promise<void>): ColumnDef
       header: () => null,
       cell: ({ row }) => {
         const [open, setOpen] = React.useState(false)
+
         return (
           <>
             <DropdownMenu>
@@ -136,7 +138,7 @@ export function getColumns(onDelete: (slug: string) => Promise<void>): ColumnDef
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-32">
-                <DropdownMenuItem onClick={() => console.log("Edit", row.original.id)}>
+                <DropdownMenuItem onClick={() => handleEdit(row.original.slug)}>
                   Edit
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => console.log("Duplicate", row.original.id)}>
@@ -208,6 +210,7 @@ function DraggableRow({ row }: { row: Row<BlogRow> }) {
 /* ---------- DataTable Component ---------- */
 export function DataTable({ data: initial }: { data: BlogRow[] }) {
   const [data, setData] = React.useState(initial)
+  const router = useRouter()
 
   const sensors = useSensors(
     useSensor(MouseSensor),
@@ -231,9 +234,14 @@ export function DataTable({ data: initial }: { data: BlogRow[] }) {
       .catch((err) => Promise.reject(err || "Error deleting blog"))
   }
 
+  // Handle Edit navigation
+  const handleEdit = (slug: string) => {
+    router.push(`/en/dashboard/blogs/${slug}`)
+  }
+
   const table = useReactTable({
     data,
-    columns: getColumns(handleDelete),
+    columns: getColumns(handleDelete, handleEdit),
     getRowId: (row) => row.id.toString(),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

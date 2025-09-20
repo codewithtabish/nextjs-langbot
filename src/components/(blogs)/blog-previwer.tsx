@@ -22,7 +22,9 @@ const MermaidBlock: React.FC<{ code: string; caption?: string }> = ({ code, capt
   if (!code) return null;
 
   return (
-    <div className="mb-8 flex flex-col items-center p-0 dark:text-gray-400">
+    <div className="mb-2 mt-2 flex flex-col items-center p-0 dark:text-gray-400">
+      <hr className="mb-4 border-b border-gray-400 w-full" />
+
       {caption && (
         <p className="font-semibold mb-2 text-center">
           {caption}
@@ -60,7 +62,6 @@ const ImageBlock: React.FC<{ file?: any; caption?: string }> = ({ file, caption 
         height={350}    // fixed height
         className=" object-contain max-h-[350px]"
       />
-      {/* {caption && <p sclassName="text-sm text-gray-500 mt-2 text-center">{caption}</p>} */}
     </div>
   );
 };
@@ -69,7 +70,7 @@ const ImageBlock: React.FC<{ file?: any; caption?: string }> = ({ file, caption 
 const CodeBlock: React.FC<{ code?: string }> = ({ code }) => {
   if (!code) return null;
   return (
-    <pre className="mb-8 overflow-x-auto p-4 bg-gray-300 dark:bg-gray-800 rounded text-sm">
+    <pre className="mb-2 overflow-x-auto p-4 bg-gray-300 dark:bg-gray-800 rounded text-sm">
       <code>{code}</code>
     </pre>
   );
@@ -77,6 +78,13 @@ const CodeBlock: React.FC<{ code?: string }> = ({ code }) => {
 
 export const BlogPreviewer: React.FC<Props> = ({ content }) => {
   const [openToggles, setOpenToggles] = useState<Record<string, boolean>>({});
+
+  // ✅ Smooth scrolling globally
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
+  }, []);
 
   if (!content || !content.blocks?.length) return null;
 
@@ -129,7 +137,6 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
                     className="px-4 py-2 dark:text-gray-400"
                     // @ts-ignore
                     dangerouslySetInnerHTML={renderHTML(block.data.itemsContent)}
-
                   />
                 )}
               </div>
@@ -195,12 +202,12 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
                 : 'h4';
             const classes =
               block.data.level === 1
-                ? 'text-4xl font-bold mt-6 mb-4 text-gray-900 dark:text-gray-400'
+                ? 'text-4xl font-bold mt-5 mb-4 text-gray-900 dark:text-gray-400'
                 : block.data.level === 2
-                ? 'text-3xl font-semibold mt-5 mb-3 text-gray-900 dark:text-gray-400'
+                ? 'text-3xl font-semibold mt-5 mb-1 text-gray-900 dark:text-gray-400'
                 : block.data.level === 3
-                ? 'text-2xl font-semibold mt-4 mb-2 text-gray-900 dark:text-gray-400'
-                : 'text-xl font-semibold mt-3 mb-2 text-gray-900 dark:text-gray-400';
+                ? 'text-2xl font-semibold mt-8 mb-1 text-gray-900 dark:text-gray-400'
+                : 'text-xl font-semibold mt-6 mb-1 text-gray-900 dark:text-gray-400';
             return <Tag key={index} className={classes}>{block.data.text}</Tag>;
           }
 
@@ -209,8 +216,8 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
             const ListTag = block.data.style === 'ordered' ? 'ol' : 'ul';
             const listClass =
               block.data.style === 'ordered'
-                ? 'list-decimal list-inside space-y-1 mb-4'
-                : 'list-disc list-inside space-y-1 mb-4';
+                ? 'list-decimal list-inside space-y-1 '
+                : 'list-disc list-inside space-y-1 ';
             return (
               <ListTag key={index} className={listClass}>
                 {block.data.items.map((item: any, i: number) => (
@@ -239,8 +246,10 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
                       readOnly
                       className="w-4 h-4 accent-blue-600"
                     />
+
+                    <span 
                     // @ts-ignore
-                    <span dangerouslySetInnerHTML={renderHTML(item.text)} />
+                    dangerouslySetInnerHTML={renderHTML(item.text)} />
                   </li>
                 ))}
               </ul>
@@ -263,8 +272,7 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
 
           case 'raw':
             if (!block.data.html) return null;
-                                // @ts-ignore
-
+            // @ts-ignore
             return <div key={index} dangerouslySetInnerHTML={renderHTML(block.data.html)} />;
 
           case 'quote':
@@ -272,7 +280,7 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
             return (
               <blockquote
                 key={index}
-                className=" border-blue-500  italic text-gray-600 dark:text-gray-300 mb-4"
+                className=" border-blue-500  italic text-gray-600 dark:text-gray-300 mb-2"
               >
                 {block.data.text}
                 {block.data.caption && (
@@ -290,8 +298,7 @@ export const BlogPreviewer: React.FC<Props> = ({ content }) => {
               <div
                 key={index}
                 className={`mb-4 p-4 rounded ${alertClasses[alertType]} ${alignClasses[alertAlign]}`}
-                                    // @ts-ignore
-
+                // @ts-ignore
                 dangerouslySetInnerHTML={renderHTML(alertMessage)}
               />
             );

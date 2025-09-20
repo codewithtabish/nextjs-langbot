@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Blog {
-  id             String   @id
+  id             String     @id @default(cuid())
   title          String
   shortDesc      String
   content        Json?
@@ -25,7 +25,7 @@ model Blog {
 }
 
 model Seo {
-  id              String   @id
+  id              String   @id @default(cuid())
   metaTitle       String
   metaDescription String
   ogTitle         String

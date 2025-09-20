@@ -52,3 +52,42 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Failed to delete blog" }, { status: 500 });
   }
 }
+
+
+
+// PUT handler
+
+
+
+export async function PUT(req: NextRequest, { params }: { params: { slug: string } }) {
+  const slug = params.slug;
+
+  try {
+    const body = await req.json();
+    const {
+      title,
+      slug: newSlug,
+      shortDesc,
+      bannerImageUrl,
+      ogImageUrl,
+      sidebarLinks,
+    } = body;
+
+    const updatedBlog = await prisma.blog.update({
+      where: { slug },
+      data: {
+        title,
+        slug: newSlug ?? slug,
+        shortDesc,
+        bannerImageUrl,
+        ogImageUrl,
+        sidebarLinks,
+      },
+    });
+
+    return NextResponse.json({ success: true, updatedBlog });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ success: false, error: "Failed to update blog" }, { status: 500 });
+  }
+}

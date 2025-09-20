@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { Grid, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import Logo from "./(hero)/logo";
-import LanguageSwitcher from "./language-switcher";
 import { ModeToggle } from "./mode-toggle";
 import ThemeChanger from "./theme-changer";
 import { headerContent } from "@/constants/translations/header-content";
@@ -24,23 +23,25 @@ import { dark } from "@clerk/themes";
 import { useTheme } from "next-themes";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "../ui/badge";
-import { BookOpen } from "lucide-react"; // any Lucide icon
-
 
 export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
-  const [menuState, setMenuState] = React.useState(false);
-  const [isScrolled, setIsScrolled] = React.useState(false);
-  const { theme } = useTheme();
-  const { user } = useUser(); // ✅ Current logged in user
+  const [menuState, setMenuState] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  const { theme } = useTheme();
+  const { user } = useUser();
+
+  useEffect(() => {
+    setMounted(true);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const nav =
-    headerContent[locale as keyof typeof headerContent] || headerContent["en"];
+  if (!mounted) return null;
+
+  const nav = headerContent[locale as keyof typeof headerContent] || headerContent["en"];
   const isRtl = isUrduTypedLanguage(locale);
 
   const menuItems = [
@@ -50,7 +51,6 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
     { name: nav.help, href: "/help" },
   ];
 
-  // ✅ Check admin email
   const isAdmin = user?.primaryEmailAddress?.emailAddress === "kashisultan099@gmail.com";
 
   return (
@@ -58,7 +58,6 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
       className="fixed top-0 left-0 w-full z-30"
       style={{ direction: isRtl ? "rtl" : "ltr" }}
     >
-      {/* {user?.primaryEmailAddress?.emailAddress} */}
       <nav data-state={menuState ? "active" : "inactive"} className="w-full">
         <div
           className={cn(
@@ -74,7 +73,7 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
               <Logo />
             </Link>
             <div className="hidden sm:block">
-              <ThemeChanger />
+              {/* <ThemeChanger /> */}
             </div>
           </div>
 
@@ -110,9 +109,7 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
                     },
                   }}
                 >
-                  <Button>
-                    {locale === "ur" || locale === "ar" ? "شروع کریں" : "Get Started"}
-                  </Button>
+                  <Button>{locale === "ur" || locale === "ar" ? "شروع کریں" : "Get Started"}</Button>
                 </SignInButton>
               </SignedOut>
 
@@ -121,41 +118,25 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
                   <Badge variant="outline">Upload File</Badge>
                 </Link>
                 <UserButton
-                afterSignOutUrl={`/${locale}`}
-  // afterSignOutUrl={process.env.NEXT_PUBLIC_BASE_URL}
-  appearance={{
-    baseTheme: theme === "dark" ? dark : undefined,
-    variables: {
-      borderRadius: "0.75rem",
-      colorPrimary: theme === "dark" ? "#22d3ee" : "#6366f1",
-    },
-  }}
->
-  <UserButton.MenuItems>
-    {/* {isAdmin && (
-      <UserButton.Link
-        label="Blogs"
-        href="/blogs"
-        labelIcon={<BookOpen className="w-4 h-4" />} // ✅ icon added
-
-
-        // optionally icon: labelIcon={<SomeIcon />}
-      />
-    )} */}
-    {isAdmin && (
-      <UserButton.Link
-        label="Dashboard"
-        href={`/${locale}/dashboard`}
-        labelIcon={<Grid className="w-4 h-4" />} // ✅ icon added
-
-
-        // optionally icon: labelIcon={<SomeIcon />}
-      />
-    )}
-  </UserButton.MenuItems>
-</UserButton>
-
-
+                  afterSignOutUrl={`/${locale}`}
+                  appearance={{
+                    baseTheme: theme === "dark" ? dark : undefined,
+                    variables: {
+                      borderRadius: "0.75rem",
+                      colorPrimary: theme === "dark" ? "#22d3ee" : "#6366f1",
+                    },
+                  }}
+                >
+                  <UserButton.MenuItems>
+                    {isAdmin && (
+                      <UserButton.Link
+                        label="Dashboard"
+                        href={`/${locale}/dashboard`}
+                        labelIcon={<Grid className="w-4 h-4" />}
+                      />
+                    )}
+                  </UserButton.MenuItems>
+                </UserButton>
               </SignedIn>
             </ClerkLoaded>
 
@@ -189,11 +170,17 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
               ))}
             </ul>
             <div className="flex flex-col gap-3">
-              <Button size="sm" className="w-full">
-                <Link href="#">
+              <SignInButton
+                mode="modal"
+                appearance={{
+                  baseTheme: theme === "dark" ? dark : undefined,
+                  variables: { borderRadius: "0.75rem", colorPrimary: theme === "dark" ? "#22d3ee" : "#6366f1" },
+                }}
+              >
+                <Button size="sm" className="w-full">
                   {locale === "ur" || locale === "ar" ? "شروع کریں" : "Get Started"}
-                </Link>
-              </Button>
+                </Button>
+              </SignInButton>
               <ThemeChanger />
             </div>
           </div>
