@@ -6,10 +6,12 @@ import Image from "next/image";
 export default async function BlogPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+    params: { slug: string };
+
+  // params: Promise<{ slug: string }>;
 }) {
   try {
-    const { slug } = await params;
+    const { slug } =  params;
 
     // ✅ Fetch main blog safely
     const blog = await getBlogBySlugAction(slug);
