@@ -5,9 +5,11 @@ import { revalidateTag } from "next/cache";
 // ✅ Update blog *content only*
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+    params: Promise<{ slug: string }>
+
+  // { params }: { params: { slug: string } }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const body = await req.json();

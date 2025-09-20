@@ -1,37 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma-client";
+import prisma from "@/lib/prisma-client"; // ✅ Adjust path if needed
 import { revalidateTag } from "next/cache";
+// import { revalidateTag } from "next/cache";
 
-// ✅ Get a single blog
 export async function GET(
-  _req: NextRequest,
-  { params }: { params: { slug: string } }
+  req: Request,
+    params: Promise<{ slug: string }>
+
+  // { params }: { params: Promise<{ slug: string }> } // ⬅️ make params a Promise
 ) {
-  const { slug } = params;
+  const { slug } = await params; // ⬅️ await params before using
 
   try {
     const blog = await prisma.blog.findUnique({
       where: { slug },
-      include: { Seo: true },
+      include: { Seo: true }, // ✅ include related SEO if needed
     });
 
     if (!blog) {
-      return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Blog not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json({ blog });
   } catch (error) {
     console.error("❌ Error fetching single blog:", error);
-    return NextResponse.json({ error: "Failed to fetch blog" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch blog" },
+      { status: 500 }
+    );
   }
 }
 
-// ✅ Update a single blog
+
+
+
+
+// ✅ Update a single blog by slug
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+    params: Promise<{ slug: string }>
+
+  // { params }: { params: { slug: string } }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const body = await req.json();
@@ -43,6 +57,9 @@ export async function PUT(
       ogImageUrl,
       sidebarLinks,
     } = body;
+
+
+
 
     const updatedBlog = await prisma.blog.update({
       where: { slug },
@@ -56,47 +73,48 @@ export async function PUT(
       },
     });
 
-    // ✅ Revalidate cache
-    revalidateTag("all:blogs");
-    revalidateTag("related:blogs");
-    revalidateTag(`single:blog:${slug}`);
-    if (newSlug && newSlug !== slug) {
-      revalidateTag(`single:blog:${newSlug}`);
-    }
+        revalidateTag("all:blogs");   
+        revalidateTag(`single:blog:${slug}`);  
+        revalidateTag("related:blogs")
+                // tags:["related:blogs"]
+ 
+                  // tags: [`single:blog:${slug}`],   // ✅ tag includes the slug
+                   // For all blogs list page
+
 
     return NextResponse.json({ success: true, updatedBlog }, { status: 200 });
   } catch (error) {
     console.error("❌ Update Error:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to update blog" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Failed to update blog" }, { status: 500 });
   }
 }
 
-// ✅ Delete a single blog
+
+
+// ✅ Delete a single blog by slug (optional)
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { slug: string } }
+    params: Promise<{ slug: string }>
+
+  // { params }: { params: { slug: string } }
 ) {
-  const { slug } = params;
+  const { slug } =await  params;
 
   try {
     const deletedBlog = await prisma.blog.delete({
       where: { slug },
     });
 
-    // ✅ Revalidate cache
-    revalidateTag("all:blogs");
-    revalidateTag("related:blogs");
-    revalidateTag(`single:blog:${slug}`);
+        revalidateTag("all:blogs"); // Revalidate the blogs list page
+        revalidateTag("related:blogs")
+
+
+
+    
 
     return NextResponse.json({ success: true, deletedBlog }, { status: 200 });
   } catch (error) {
     console.error("❌ Delete Error:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to delete blog" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Failed to delete blog" }, { status: 500 });
   }
 }
