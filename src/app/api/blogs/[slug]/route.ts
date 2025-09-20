@@ -1,42 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma-client"; // ✅ Adjust path if needed
+import prisma from "@/lib/prisma-client";
 import { revalidateTag } from "next/cache";
-// import { revalidateTag } from "next/cache";
 
+// ✅ Get a single blog
 export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ slug: string }> } // ⬅️ make params a Promise
+  _req: NextRequest,
+  { params }: { params: { slug: string } }
 ) {
-  const { slug } = await params; // ⬅️ await params before using
+  const { slug } = params;
 
   try {
     const blog = await prisma.blog.findUnique({
       where: { slug },
-      include: { Seo: true }, // ✅ include related SEO if needed
+      include: { Seo: true },
     });
 
     if (!blog) {
-      return NextResponse.json(
-        { error: "Blog not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Blog not found" }, { status: 404 });
     }
 
     return NextResponse.json({ blog });
   } catch (error) {
     console.error("❌ Error fetching single blog:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch blog" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch blog" }, { status: 500 });
   }
 }
 
-
-
-
-
-// ✅ Update a single blog by slug
+// ✅ Update a single blog
 export async function PUT(
   req: NextRequest,
   { params }: { params: { slug: string } }
@@ -54,9 +44,6 @@ export async function PUT(
       sidebarLinks,
     } = body;
 
-
-
-
     const updatedBlog = await prisma.blog.update({
       where: { slug },
       data: {
@@ -69,25 +56,25 @@ export async function PUT(
       },
     });
 
-        revalidateTag("all:blogs");   
-        revalidateTag(`single:blog:${slug}`);  
-        revalidateTag("related:blogs")
-                // tags:["related:blogs"]
- 
-                  // tags: [`single:blog:${slug}`],   // ✅ tag includes the slug
-                   // For all blogs list page
-
+    // ✅ Revalidate cache
+    revalidateTag("all:blogs");
+    revalidateTag("related:blogs");
+    revalidateTag(`single:blog:${slug}`);
+    if (newSlug && newSlug !== slug) {
+      revalidateTag(`single:blog:${newSlug}`);
+    }
 
     return NextResponse.json({ success: true, updatedBlog }, { status: 200 });
   } catch (error) {
     console.error("❌ Update Error:", error);
-    return NextResponse.json({ success: false, error: "Failed to update blog" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to update blog" },
+      { status: 500 }
+    );
   }
 }
 
-
-
-// ✅ Delete a single blog by slug (optional)
+// ✅ Delete a single blog
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: { slug: string } }
@@ -99,16 +86,17 @@ export async function DELETE(
       where: { slug },
     });
 
-        revalidateTag("all:blogs"); // Revalidate the blogs list page
-        revalidateTag("related:blogs")
-
-
-
-    
+    // ✅ Revalidate cache
+    revalidateTag("all:blogs");
+    revalidateTag("related:blogs");
+    revalidateTag(`single:blog:${slug}`);
 
     return NextResponse.json({ success: true, deletedBlog }, { status: 200 });
   } catch (error) {
     console.error("❌ Delete Error:", error);
-    return NextResponse.json({ success: false, error: "Failed to delete blog" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to delete blog" },
+      { status: 500 }
+    );
   }
 }
