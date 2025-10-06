@@ -1,0 +1,254 @@
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../src/generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id        String     @id @default(cuid())
+//   clerkId   String     @unique   // Clerk auth reference
+//   email     String     @unique
+//   fullName      String?
+//   isAdmin    ISADMIN   @default(USER)
+
+//   plan      Plan       @default(FREE)
+//   createdAt DateTime   @default(now())
+//   updatedAt DateTime   @updatedAt
+
+//   summaries Summary[]
+//   chats     Chat[]
+// }
+
+// enum Plan {
+//   FREE
+//   PRO
+// }
+// enum ISADMIN{
+//   USER
+//   ADMIN
+// }
+
+// model Summary {
+//   id              String         @id @default(cuid())
+//   userId          String
+//   fileName        String
+//   fileType        String
+//   fileUrl         String?
+//   summaryData     Json?          // structured summary text
+//   previewImageUrl String?
+//   status          SummaryStatus  @default(PENDING)
+//   createdAt       DateTime       @default(now())
+//   updatedAt       DateTime       @updatedAt
+
+//   user            User           @relation(fields: [userId], references: [id])
+// }
+
+// enum SummaryStatus {
+//   PENDING
+//   DONE
+//   FAILED
+// }
+
+// enum ChatStatus {
+//   PENDING
+//   DONE
+//   FAILED
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../src/generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id        String     @id @default(cuid())
+//   clerkId   String     @unique   // Clerk auth reference
+//   email     String     @unique
+//   fullName      String?
+//   isAdmin    ISADMIN   @default(USER)
+
+//   plan      Plan       @default(FREE)
+//   createdAt DateTime   @default(now())
+//   updatedAt DateTime   @updatedAt
+
+//   summaries Summary[]
+//   chats     Chat[]
+// }
+
+// enum Plan {
+//   FREE
+//   PRO
+// }
+// enum ISADMIN{
+//   USER
+//   ADMIN
+// }
+
+// model Summary {
+//   id              String         @id @default(cuid())
+//   userId          String
+//   fileName        String
+//   fileType        String
+//   fileUrl         String?
+//   summaryData     Json?          // structured summary text
+//   previewImageUrl String?
+//   status          SummaryStatus  @default(PENDING)
+//   createdAt       DateTime       @default(now())
+//   updatedAt       DateTime       @updatedAt
+
+//   user            User           @relation(fields: [userId], references: [id])
+// }
+
+// enum SummaryStatus {
+//   PENDING
+//   DONE
+//   FAILED
+// }
+
+// enum ChatStatus {
+//   PENDING
+//   DONE
+//   FAILED
+// }
+
+// model Chat {
+//   id              String       @id @default(cuid())
+//   userId          String
+//   fileName        String
+//   status        ChatStatus @default(PENDING)
+//   fileType        String
+//   fileUrl         String?
+//   previewImageUrl String?
+//   chatStatus          ChatMessagesStatus   @default(ACTIVE)
+//   messages        Message[]
+//   createdAt       DateTime     @default(now())
+//   updatedAt       DateTime     @updatedAt
+
+//   user            User         @relation(fields: [userId], references: [id])
+// }
+
+
+
+// enum ChatMessagesStatus {
+//   PENDING
+//   ACTIVE
+//   CLOSED
+//   FAILED
+// }
+
+
+// model Blog {
+//   id             String     @id @default(cuid())
+//   title          String
+//   shortDesc      String
+//   content        Json?
+//   category       String
+//   bannerImageUrl String
+//   ogImageUrl     String
+//   sidebarLinks   String[]
+//   seoId          String   @unique
+//   slug           String   @unique
+//   createdAt      DateTime @default(now())
+//   updatedAt      DateTime
+//   Seo            Seo      @relation(fields: [seoId], references: [id])
+// }
+
+// model Seo {
+//   id              String   @id @default(cuid())
+//   metaTitle       String
+//   metaDescription String
+//   ogTitle         String
+//   ogDescription   String
+//   tags            String[]
+//   keywords        String[]
+//   canonicalUrl    String
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime
+//   Blog            Blog?
+// }
+
+
+// model Message {
+//   id        String   @id @default(cuid())
+//   chatId    String
+//   sender    String   // "user" or "ai"
+//   content   String
+//   createdAt DateTime @default(now())
+
+//   chat      Chat     @relation(fields: [chatId], references: [id])
+// }
+
+
+// model Chat {
+//   id              String       @id @default(cuid())
+//   userId          String
+//   fileName        String
+//   status        ChatStatus @default(PENDING)
+//   fileType        String
+//   fileUrl         String?
+//   previewImageUrl String?
+//   chatStatus          ChatMessagesStatus   @default(ACTIVE)
+//   messages        Message[]
+//   createdAt       DateTime     @default(now())
+//   updatedAt       DateTime     @updatedAt
+
+//   user            User         @relation(fields: [userId], references: [id])
+// }
+
+// enum ChatMessagesStatus {
+//   PENDING
+//   ACTIVE
+//   CLOSED
+//   FAILED
+// }
+
+// model Message {
+//   id        String   @id @default(cuid())
+//   chatId    String
+//   sender    String   // "user" or "ai"
+//   content   String
+//   createdAt DateTime @default(now())
+
+//   chat      Chat     @relation(fields: [chatId], references: [id])
+// }
+
+
+
+// model Blog {
+//   id             String     @id @default(cuid())
+//   title          String
+//   shortDesc      String
+//   content        Json?
+//   category       String
+//   bannerImageUrl String
+//   ogImageUrl     String
+//   sidebarLinks   String[]
+//   seoId          String   @unique
+//   slug           String   @unique
+//   createdAt      DateTime @default(now())
+//   updatedAt      DateTime
+//   Seo            Seo      @relation(fields: [seoId], references: [id])
+// }
+
+// model Seo {
+//   id              String   @id @default(cuid())
+//   metaTitle       String
+//   metaDescription String
+//   ogTitle         String
+//   ogDescription   String
+//   tags            String[]
+//   keywords        String[]
+//   canonicalUrl    String
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime
+//   Blog            Blog?
+// }

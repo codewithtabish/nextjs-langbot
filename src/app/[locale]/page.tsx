@@ -1,5 +1,7 @@
 import DashboardBentoGrid from "@/components/dashboard/(main)/dashboard-bento-grid"
+import HeroFallback from "@/components/generals/(hero)/hero-fallback"
 import HeroSection from "@/components/generals/(hero)/hero-section"
+import HeaderFallback from "@/components/generals/(home)/header-fallback"
 import CtaParentSection from "@/components/generals/(home)/home-cta-section"
 import Features from "@/components/generals/(home)/home-features"
 import StatsSection from "@/components/generals/(home)/home-status"
@@ -7,7 +9,9 @@ import HomeLogoCloud from "@/components/generals/(home)/logo-cloud"
 import Pricing from "@/components/generals/(home)/pricing-section"
 import WorkingStepsWrapper from "@/components/generals/(home)/working-steps-wrapper"
 import { HeroHeader } from "@/components/generals/header"
+import HeaderWrapper from "@/components/generals/header-wrapper"
 import { HoverBackground } from "@/components/ui/hover-background"
+import { Suspense } from "react"
 
 export default async function LocalePage({
   params,
@@ -18,7 +22,10 @@ export default async function LocalePage({
 
   return (
     <div className="w-screen  ">
-              <HeroHeader locale={locale}/>
+        <Suspense fallback={<HeaderFallback/>}>
+        <HeaderWrapper locale={locale} />
+      </Suspense>
+              {/* <HeroHeader locale={locale}/> */}
 
       
               <HoverBackground
@@ -46,8 +53,11 @@ export default async function LocalePage({
         }}
         objectCount={12}
       >
-
+<Suspense fallback={<HeroFallback/>}>
       <HeroSection locale={locale} />
+
+</Suspense>
+
          <div className="md:max-w-6xl mx-auto py-10">
       <DashboardBentoGrid/>
 

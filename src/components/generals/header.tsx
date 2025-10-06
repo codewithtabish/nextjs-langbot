@@ -114,8 +114,8 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
               </SignedOut>
 
               <SignedIn>
-                <Link href={`/${locale}/dashboard`} className="py-3 mr-3">
-                  <Badge variant="outline">Upload File</Badge>
+                <Link href={`/${locale}/my-files`} className="py-3 mr-3">
+                  <Badge variant="outline">MY FILES</Badge>
                 </Link>
                 <UserButton
                   afterSignOutUrl={`/${locale}`}
