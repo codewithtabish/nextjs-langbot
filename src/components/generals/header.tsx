@@ -23,6 +23,7 @@ import { dark } from "@clerk/themes";
 import { useTheme } from "next-themes";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "../ui/badge";
+import ProfileDropdown from "../kokonutui/profile-dropdown";
 
 export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
   const [menuState, setMenuState] = useState(false);
@@ -114,10 +115,12 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
               </SignedOut>
 
               <SignedIn>
-                <Link href={`/${locale}/my-files`} className="py-3 mr-3">
+                <Link href={`/${locale}/user/dashboard`} className="py-3 mr-3">
                   <Badge variant="outline">MY FILES</Badge>
                 </Link>
-                <UserButton
+                     <ProfileDropdown/>
+                
+                {/* <UserButton
                   afterSignOutUrl={`/${locale}`}
                   appearance={{
                     baseTheme: theme === "dark" ? dark : undefined,
@@ -136,7 +139,7 @@ export const HeroHeader = ({ locale = "en" }: HomeLogoCloudProps) => {
                       />
                     )}
                   </UserButton.MenuItems>
-                </UserButton>
+                </UserButton> */}
               </SignedIn>
             </ClerkLoaded>
 

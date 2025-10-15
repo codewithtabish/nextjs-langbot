@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+// @ts-ignore
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/generals/theme-provider";
@@ -53,3 +54,4 @@ export default function RootLayout({
 
 
 
+// https://framer.com/projects/Untitled--cY4FEsSwXXor0ai25fJy-9d3bu?node=augiA20Il

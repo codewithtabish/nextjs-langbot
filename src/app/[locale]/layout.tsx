@@ -1,4 +1,4 @@
-import "../globals.css";
+// import "../globals.css";
 // import "@/styles/themes/twitter.css";
 // import "@/styles/themes/midnight-bloom.css";
 // import "@/styles/themes/nature.css";
